@@ -126,6 +126,9 @@ wp rewrite flush --hard
 wp plugin delete akismet
 wp plugin delete hello
 
+# install other plugins
+wp plugin install wp-mail-smtp --activate
+
 echo "================================================================="
 print_info "Installation is complete."
 
