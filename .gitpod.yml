@@ -26,4 +26,5 @@ tasks:
     echo " * gp open /var/log/apache2/error.log";
 - name: Wordpress Installation
   command: >
-  ./install.sh & ./custom_install_steps.sh;
+  ./install.sh;
+  ./custom_install_steps.sh
