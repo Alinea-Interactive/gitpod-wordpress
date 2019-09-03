@@ -97,7 +97,9 @@ fi
 
 # create the wp-config file with our standard setup
 wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --extra-php <<PHP
-define( 'WP_DEBUG', true );
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
 define( 'DISALLOW_FILE_EDIT', true );
 PHP
 
@@ -113,19 +115,8 @@ fi
 # parse the current directory name
 wp core install --url="$SITE_URL" --title="$SITE_NAME" --admin_user="$SITE_USER" --admin_password="$SITE_PASS" --admin_email="$SITE_EMAIL"
 
-
 # discourage search engines
 wp option update blog_public 0
-
-# delete sample page, and create homepage
-wp post delete $(wp post list --post_type=page --posts_per_page=1 --post_status=publish --pagename="sample-page" --field=ID --format=ids)
-wp post create --post_type=page --post_title=Home --post_status=publish --post_author=$(wp user get $SITE_USER --field=ID --format=ids)
-
-# set homepage as front page
-wp option update show_on_front 'page'
-
-# set homepage to be the new page
-wp option update page_on_front $(wp post list --post_type=page --post_status=publish --posts_per_page=1 --pagename=home --field=ID --format=ids)
 
 # set pretty urls
 wp rewrite structure '/%postname%/' --hard
@@ -134,9 +125,6 @@ wp rewrite flush --hard
 # delete akismet and hello dolly
 wp plugin delete akismet
 wp plugin delete hello
-
-wp theme activate rigo
-wp plugin activate advanced-custom-fields
 
 echo "================================================================="
 print_info "Installation is complete."
