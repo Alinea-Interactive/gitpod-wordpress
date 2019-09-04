@@ -6,13 +6,11 @@ ports:
 - port: 3306
 tasks:
 - name: Apache & MySQL
-  command: >
+  init: >
     cp .env.example .env;
-    cp .htaccess.example .htaccess;
-    mysqld --initialize-insecure;
-    mysqld &
-    sleep 5;
-    mysql -u root -e "CREATE DATABASE wordpress";
+    cp .htaccess.example .htaccess;   
+    mysql -u root -e "CREATE DATABASE wordpress";  
+  command: >
     apachectl start;
     multitail gitpod_config/apache/logs/access.log -I gitpod_config/apache/logs/error.log
 - name: Terminal
