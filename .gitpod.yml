@@ -14,7 +14,7 @@ tasks:
     sleep 5;
     mysql -u root -e "CREATE DATABASE wordpress";
     apachectl start;
-    multitail /var/log/apache2/access.log -I /var/log/apache2/error.log
+    multitail gitpod_config/apache/logs/access.log -I gitpod_config/apache/logs/error.log
 - name: Terminal
   command: >
     echo "Welcome!";
